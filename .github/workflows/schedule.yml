@@ -1,0 +1,33 @@
+name: Update gist with Weibo Rank stats
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "* * * * *"
+jobs:
+  checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache
+      - name: Install Dependencies
+        run: |
+          npm install -g yarn
+          yarn --frozen-lockfile --non-interactive
+      - name: Run Script
+        run: |
+          node index.js
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GIST_ID: 49ba06333a956344d935868841e733d5
