@@ -29,5 +29,5 @@ jobs:
         run: |
           node index.js
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: 49ba06333a956344d935868841e733d5
